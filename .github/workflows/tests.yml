@@ -1,0 +1,33 @@
+name: tests
+
+on: [push, pull_request, workflow_dispatch]
+
+permissions:
+  contents: read
+
+jobs:
+  cpu:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.10', '3.11']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - name: Install CPU dependencies and package
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install torch==2.5.1 --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -r requirements.txt
+          python -m pip install --no-deps -e .
+      - name: Algorithm, data and integration tests
+        run: python -m unittest discover -s tests -v
+      - name: Synthetic smoke and recommendation
+        run: |
+          python -m forum smoke --config configs/smoke.json --out runs/ci-smoke --device cpu
+          forum recommend --checkpoint runs/ci-smoke/serving.pt --user 0 --count 5

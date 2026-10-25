@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "forum-recommendation"
+version = "0.1.0"
+description = "Future-Oriented Representation and Uncertainty Modeling for offline recommendation"
+readme = "README.md"
+license = {file = "LICENSE"}
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.23,<3", "torch>=2.5,<3"]
+
+[project.scripts]
+forum = "forum.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["forum*"]

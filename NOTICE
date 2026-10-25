@@ -1,0 +1,27 @@
+FORUM: Future-Oriented Representation and Uncertainty Modeling
+
+Algorithm source
+----------------
+This implementation follows the supplied manuscript:
+"Beyond Reward Accuracy: Latent World Modeling for Offline Reinforcement
+Learning in Recommendation", Sections 4.1-4.4, Algorithm 1 and Section 5.2.
+See docs/paper_alignment.md for the equation mapping and implementation choices.
+The manuscript and its figures are not redistributed in this repository.
+The manuscript's placeholder performance tables are not measured code results.
+
+Code provenance
+---------------
+The Python implementation was developed for this project with AI assistance.
+It does not vendor or import SGAR, CODI, DORL or RL4Rec source code. The generic
+ML components use NumPy and PyTorch; those projects retain their own licenses.
+The MIT license applies to this repository's code, not external datasets,
+models, manuscripts or third-party software.
+
+Optional evaluation data
+------------------------
+Coat data must be supplied separately. The optional Coat evaluator checks the
+fingerprint of the completed RL4Rec simulation matrix published at:
+https://github.com/BetsyHJ/RL4Rec/blob/main/data/coat_pseudoGT_ratingM.ascii
+This file is a completed simulator matrix, not a fully observed human-rating
+dataset. Dataset permissions and upstream attribution remain applicable.
+No data, pretrained weights or experiment outputs are distributed here.
