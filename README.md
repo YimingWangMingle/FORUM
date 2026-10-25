@@ -1,25 +1,46 @@
 <div align="center">
 
-# FORUM
+<img src="assets/forum-logo.png" alt="FORUM" width="850">
 
 ### Future-Oriented Representation and Uncertainty Modeling
 
 **Latent world models for offline reinforcement learning in recommendation**
 
-[Overview](#overview) · [Installation](#installation) · [Quick Start](#quick-start) · [Training](#training) · [Evaluation](#evaluation) · [Documentation](#documentation)
+<p>
+  <a href="pyproject.toml"><img src="https://img.shields.io/badge/Python-3.10%2B-45687d?style=flat-square&amp;logo=python&amp;logoColor=white" alt="Python 3.10+"></a>
+  <a href="requirements.txt"><img src="https://img.shields.io/badge/PyTorch-2.5.1-EF795F?style=flat-square&amp;logo=pytorch&amp;logoColor=white" alt="PyTorch 2.5.1"></a>
+  <a href="#method-overview"><img src="https://img.shields.io/badge/Offline_RL-Recommendation-7976CD?style=flat-square" alt="Offline RL for recommendation"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-4d6e53?style=flat-square" alt="MIT License"></a>
+</p>
+
+[Overview](#overview) · [Method](#method-overview) · [Installation](#installation) · [Quick Start](#quick-start) · [Data](#data-preparation) · [Training](#training) · [Evaluation](#evaluation) · [Documentation](#documentation)
 
 </div>
 
 This repository provides a PyTorch implementation of **FORUM**, the method described in
 *Beyond Reward Accuracy: Latent World Modeling for Offline Reinforcement Learning in Recommendation*.
 
-## Overview
+<a id="overview"></a>
+
+## 🔎 Overview
 
 FORUM learns recommendation policies from logged interactions through a latent user
 world model. Its representation objective distinguishes histories with different
 multi-step feedback and engagement outcomes. An ensemble of conditional diffusion
 models predicts user responses and latent transitions, while disagreement in rewards
 and continuation values guides conservative policy optimization.
+
+<a id="method-overview"></a>
+
+## 🧠 Method Overview
+
+<p align="center">
+  <img src="assets/method-overview.gif" alt="FORUM's five-step animated walkthrough: future-aware representation, latent world modeling, value-sensitive uncertainty, conservative policy learning, and deployment." width="100%">
+</p>
+
+<p align="center">
+  <a href="assets/method-overview.png">View the static framework</a>
+</p>
 
 The framework consists of four components:
 
@@ -36,7 +57,9 @@ The framework consists of four components:
 At deployment, the encoder and actor rank behavior-supported candidates directly.
 World-model simulation and critic evaluation are used only during training.
 
-## Installation
+<a id="installation"></a>
+
+## ⚙️ Installation
 
 Run the following commands from the repository root. The locally tested environment
 uses **Python 3.10**, **PyTorch 2.5.1**, and **NumPy 1.23.5** on CPU.
@@ -53,7 +76,13 @@ The installed `forum` command and `python -m forum` expose the same interface.
 Training accepts `--device cpu`, `--device cuda`, or `--device mps`; the examples
 below use the validated CPU path.
 
-## Quick Start
+<a id="quick-start"></a>
+
+## 🚀 Quick Start
+
+<p align="center">
+  <img src="assets/reproduction-workflow.png" alt="Offline training from interaction logs through representation learning, world modeling, and policy training; the trained recommender then ranks items from user histories." width="100%">
+</p>
 
 Run a small end-to-end experiment without downloading a dataset:
 
@@ -78,7 +107,9 @@ Each history entry is an `[item_id, observed_feedback]` pair. With the default N
 constraint, previously recommended items are excluded from the candidate set.
 The smoke experiment uses synthetic sessions to verify the training and inference pipeline.
 
-## Data Preparation
+<a id="data-preparation"></a>
+
+## 📂 Data Preparation
 
 The general training interface accepts **JSONL sessions**, with one session per line:
 
@@ -101,7 +132,9 @@ python scripts/make_toy_data.py --out data/toy.jsonl
 This produces 32 sessions for 16 users over a catalog of 40 items. Both observed
 terminations and censored sessions are included.
 
-## Training
+<a id="training"></a>
+
+## 🏋️ Training
 
 ### Training from interaction sessions
 
@@ -167,7 +200,9 @@ Existing run directories are not overwritten. The full checkpoint supports model
 loading through `forum.checkpoint.load_training_bundle`; optimizer and RNG states
 are not included for exact interrupted-training resumption.
 
-## Evaluation
+<a id="evaluation"></a>
+
+## 📊 Evaluation
 
 The optional Coat evaluator loads a completed, frozen policy and checks the
 fingerprint of the separately supplied RL4Rec completed rating matrix:
@@ -188,10 +223,13 @@ The current release includes functional validation and a Coat adapter. Benchmark
 performance results and raw-data adapters for KuaiRec, KuaiRand, and Yahoo are not
 included.
 
-## Repository Structure
+<a id="repository-structure"></a>
+
+## 🗂️ Repository Structure
 
 ```text
-FORUM-github/
+FORUM/
+├── assets/                  # README illustrations and animation
 ├── configs/                 # Training presets
 ├── forum/
 │   ├── data.py              # Sessions, causal histories, and future targets
@@ -212,7 +250,9 @@ FORUM-github/
 └── .github/workflows/       # Continuous integration
 ```
 
-## Testing
+<a id="testing"></a>
+
+## 🧪 Testing
 
 ```bash
 python -m unittest discover -s tests -v
@@ -223,20 +263,26 @@ ensemble uncertainty, support constraints, dual-critic targets, checkpoint loadi
 and the public training and recommendation commands. The GitHub Actions workflow
 is configured for Python 3.10 and 3.11 on Linux CPU.
 
-## Documentation
+<a id="documentation"></a>
+
+## 📚 Documentation
 
 - [Architecture](docs/architecture.md): component interfaces and the complete data flow.
 - [Data Format](docs/data_format.md): session schema, preprocessing requirements, and evaluation inputs.
 - [Paper Alignment](docs/paper_alignment.md): equation-to-code mapping and implementation details.
 - [Implementation Audit](docs/implementation_audit.md): verified equations, corrected mismatches, regression tests, and validation limits.
 
-## Acknowledgements
+<a id="acknowledgements"></a>
+
+## 🤝 Acknowledgements
 
 FORUM is implemented with [PyTorch](https://pytorch.org/) and [NumPy](https://numpy.org/).
 The documentation structure draws on [EasyRL4Rec](https://github.com/chongminggao/EasyRL4Rec)
 and [EME](https://github.com/YimingWangMingle/EME).
 Code and data provenance are described in [NOTICE](NOTICE).
 
-## License
+<a id="license"></a>
+
+## 📄 License
 
 This project is released under the [MIT License](LICENSE).
